@@ -1,7 +1,7 @@
 # Maintainer: zenox444x <https://github.com/zenox444x>
 pkgname=wit
 pkgver=4.0.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Windows Is Trash — CachyOS app installer, gaming tools, and system fixer (GTK4)"
 arch=('any')
 url="https://github.com/zenox444x/WIT"
