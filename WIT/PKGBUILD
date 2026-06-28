@@ -1,0 +1,61 @@
+# Maintainer: zenox444x <https://github.com/zenox444x>
+pkgname=wit
+pkgver=8.1.0
+pkgrel=1
+pkgdesc="WIT — CachyOS app installer, gaming tools, and system fixer (GTK4)"
+arch=('any')
+url="https://github.com/zenox444x/WIT"
+license=('MIT')
+depends=(
+    'python'
+    'python-gobject'
+    'gtk4'
+    'libadwaita'
+)
+optdepends=(
+    'yay: required for AUR package installation'
+    'bluez: for bluetooth fixes'
+    'networkmanager: for wi-fi fixes'
+    'gamemode: for gaming performance'
+    'timeshift: for automatic snapshots before critical operations'
+)
+
+source=(
+    "wit.py::https://raw.githubusercontent.com/zenox444x/WIT/main/WIT/wit.py"
+    "wit.png::https://raw.githubusercontent.com/zenox444x/WIT/main/WIT/wit.png"
+)
+sha256sums=('SKIP' 'SKIP')
+
+package() {
+    # ── Main script → /usr/lib/wit/wit.py ──────────────────────────────────
+    install -Dm755 "${srcdir}/wit.py" "${pkgdir}/usr/lib/wit/wit.py"
+
+    # ── Launcher wrapper → /usr/bin/wit ────────────────────────────────────
+    install -dm755 "${pkgdir}/usr/bin"
+    cat > "${pkgdir}/usr/bin/wit" << 'WRAPPER'
+#!/bin/bash
+exec python3 /usr/lib/wit/wit.py "$@"
+WRAPPER
+    chmod 755 "${pkgdir}/usr/bin/wit"
+
+    # ── Icon (256x256 PNG) ──────────────────────────────────────────────────
+    install -Dm644 "${srcdir}/wit.png" \
+        "${pkgdir}/usr/share/icons/hicolor/256x256/apps/wit.png"
+
+    # ── Desktop entry ───────────────────────────────────────────────────────
+    install -dm755 "${pkgdir}/usr/share/applications"
+    cat > "${pkgdir}/usr/share/applications/wit.desktop" << 'DESKTOP'
+[Desktop Entry]
+Name=WIT
+GenericName=CachyOS Toolkit
+Comment=WIT — Install apps and fix system issues on CachyOS
+Exec=/usr/bin/wit
+Icon=wit
+Terminal=false
+Type=Application
+Categories=System;PackageManager;Settings;
+Keywords=install;packages;yay;aur;bluetooth;wifi;cachy;gaming;
+StartupNotify=true
+StartupWMClass=wit
+DESKTOP
+}
