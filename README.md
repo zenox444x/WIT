@@ -1,4 +1,4 @@
-# WIT (BETA)
+# WIT (BETA V5.0)
 
 
 EASY INSTALL ( arch BASE ONLY )
