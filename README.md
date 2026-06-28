@@ -1,5 +1,5 @@
-# WIT (BETA V5.0)
-
+# WIT (BETA)
+The app still in beta version 
 
 EASY INSTALL ( arch BASE ONLY )
 
